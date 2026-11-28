@@ -1,4 +1,3 @@
-
 """Tests for the shared utility functions in pandalogue.
 
 These tests verify number and percentage formatting, text joining,
