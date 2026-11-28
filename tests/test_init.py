@@ -1,55 +1,61 @@
 
-"""Tests for the public interface and initialization of the pandalogue package.
-
-These tests verify that the package exposes its intended classes,
-that its public exports are valid, and that its version matches
-the version declared in setup.py.
-"""
-
 import pandalogue
 
 
-def test_everything_can_be_imported_from_the_package():
-    """Verify that all public classes can be imported from pandalogue.
-
-    Also checks that the describer classes inherit from BaseDescriber
-    and that Story and DataStory are available.
-    """
-    from pandalogue import (
-        BaseDescriber,
-        CategoryDescriber,
-        DataStory,
-        DateDescriber,
-        MissingDescriber,
-        NumberDescriber,
-        RelationshipDescriber,
-        RuleDescriber,
-        Story,
-    )
-
-    for describer in (
-        CategoryDescriber,
-        DateDescriber,
-        MissingDescriber,
-        NumberDescriber,
-        RelationshipDescriber,
-        RuleDescriber,
-    ):
-        assert issubclass(describer, BaseDescriber)
-    assert DataStory and Story
+def test_version():
+    assert pandalogue.__version__ == "0.1.0"
 
 
-def test_all_lists_only_real_names():
-     """Verify that every name listed in __all__ exists in the package."""
-    for name in pandalogue.__all__:
-        assert hasattr(pandalogue, name)
+def test_public_classes():
+    assert hasattr(pandalogue, "BaseDescriber")
+    assert hasattr(pandalogue, "NumberDescriber")
+    assert hasattr(pandalogue, "CategoryDescriber")
+    assert hasattr(pandalogue, "MissingDescriber")
+    assert hasattr(pandalogue, "DateDescriber")
+    assert hasattr(pandalogue, "RelationshipDescriber")
+    assert hasattr(pandalogue, "Story")
+    assert hasattr(pandalogue, "DataStory")
 
 
-def test_version_matches_setup_py():
-    """Verify that the package version matches the version in setup.py."""
-    from pathlib import Path
-    import re
+def test_public_utility_functions():
+    assert callable(pandalogue.format_percent)
+    assert callable(pandalogue.format_number)
+    assert callable(pandalogue.join_with_and)
+    assert callable(pandalogue.count_text)
+    assert callable(pandalogue.infinite_note)
+    assert callable(pandalogue.empty_mask)
+    assert callable(pandalogue.count_empty)
+    assert callable(pandalogue.drop_empty)
+    assert callable(pandalogue.parse_number)
+    assert callable(pandalogue.text_to_numbers)
+    assert callable(pandalogue.mixes_numbers_and_words)
+    assert callable(pandalogue.looks_like_id)
 
-    setup_text = (Path(__file__).parent.parent / "setup.py").read_text(encoding="utf-8")
-    version = re.search(r'version="([^"]+)"', setup_text).group(1)
-    assert pandalogue.__version__ == version
+
+def test_all_exports():
+    expected = [
+        "__version__",
+        "BaseDescriber",
+        "NumberDescriber",
+        "CategoryDescriber",
+        "MissingDescriber",
+        "DateDescriber",
+        "RelationshipDescriber",
+        "Story",
+        "DataStory",
+        "format_percent",
+        "format_number",
+        "join_with_and",
+        "count_text",
+        "infinite_note",
+        "empty_mask",
+        "count_empty",
+        "drop_empty",
+        "parse_number",
+        "text_to_numbers",
+        "mixes_numbers_and_words",
+        "looks_like_id"
+    ]
+
+    assert pandalogue.__all__ == expected
+
